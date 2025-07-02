@@ -9,7 +9,7 @@ FROM (
     INNER JOIN ducks ON birds.Species_Common_Name = ducks.name
     GROUP BY 
         birds.Species_Common_Name
-)
+) my_subquery
 WHERE 
     Avg_Beak_Length_Culmen > (
         SELECT QUANTILE_CONT(birds.Beak_Length_Culmen, 0.95)
