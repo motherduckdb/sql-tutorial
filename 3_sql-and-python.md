@@ -168,7 +168,7 @@ The result of the prior read_csv operation is an Ibis object. It is similar to t
 To save the result of our read_csv into the DuckDB file, we create a table.
 
 ```{code-cell}
-persistent_ducks = con.create_table(name='persistent_ducks', obj=ducks_ibis.to_pyarrow(), overwrite=True)
+persistent_ducks = con.create_table('persistent_ducks', obj=ducks_ibis.to_pyarrow(), overwrite=True)
 persistent_ducks
 ```
 
