@@ -18,10 +18,10 @@ kernelspec:
 
 # 4. Collaborating with data in the Cloud
 
-To start off, install the latest version of `duckdb`, `magic-duckdb` and `dash` to run this notebook.
+To start off, install the latest version of `duckdb` and `magic-duckdb` to run this notebook.
 
 ```{code-cell}
-!pip install --upgrade duckdb magic-duckdb dash -q
+!pip install --upgrade duckdb magic-duckdb -q
 %load_ext magic_duckdb
 ```
 
@@ -236,46 +236,4 @@ To drop the share you created, simply run:
 ```{code-cell}
 %%dql -co con
 DROP SHARE duck_share;
-```
-
-## Visualize your data
-
-Now that your data is in the Cloud and easy to share, you can also create simple web apps that load and plot the data!
-
-Here is an example Dash app that you can run to plot data in the `sample_data` database.
-
-```{code-cell}
-:tags: [remove-output]
-from dash import Dash, html, dcc, callback, Output, Input
-import plotly.express as px
-import pandas as pd
-from sqlalchemy import create_engine, text
-
-con = duckdb.connect("md:sample_data")
-
-countries = con.sql('SELECT DISTINCT country_name as countries FROM who.ambient_air_quality ORDER BY country_name')
-
-app = Dash()
-
-app.layout = [
-    html.H1(children='Air quality by country', style={'textAlign':'center', 'font-family':'monospace'}),
-    dcc.Dropdown(countries.df().countries.values.tolist(), 'Canada', id='dropdown-selection'),
-    dcc.Graph(id='graph-content')
-]
-
-@callback(
-    Output('graph-content', 'figure'),
-    Input('dropdown-selection', 'value')
-)
-def update_graph(value):
-    sql = "SELECT year, avg(pm25_concentration) as avg_pm25 FROM who.ambient_air_quality WHERE country_name=? GROUP by year ORDER by year"
-    result = con.execute(sql, [value]).df()
-    return px.line(result, x='year', y='avg_pm25')
-
-if __name__ == '__main__':
-  app.run(debug=True)
-```
-
-```{admonition} Exercise (bonus)
-Create a dashboard that plots the data your neighbor shared with you. Share it in the `#scipy-2024` Slack channel so others can give it a try!
 ```
