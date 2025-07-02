@@ -18,7 +18,7 @@ To get started with the tutorial, you'll need an interactive Python notebook env
 
 ## Option 1: Run in Colab
 
-To get started without any setup required, <a target="_blank" href="https://colab.research.google.com/github/MotherDuck-Open-Source/sql-tutorial">open the tutorial in Colab</a>.
+To get started without any setup required, <a target="_blank" href="https://colab.research.google.com/github/motherduckdb/sql-tutorial">open the tutorial in Colab</a>.
 
 This requires a Google account. If you don't have one, you can <a href="https://accounts.google.com/signup" target="_blank">sign up</a>, or try the other options below.
 
@@ -26,7 +26,7 @@ This requires a Google account. If you don't have one, you can <a href="https://
 
 1. Browse to a folder in your home directory where you want to keep your tutorial files and clone the GitHub repo:
 ```bash
-git clone git@github.com:MotherDuck-Open-Source/sql-tutorial.git
+git clone git@github.com:motherduckdb/sql-tutorial.git
 ```
 2. Create a new Python virtual environment and activate it:
 ```bash

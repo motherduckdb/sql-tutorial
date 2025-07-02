@@ -11,7 +11,7 @@ kernelspec:
   name: python3
 ---
 
-<a target="_blank" href="https://colab.research.google.com/github/MotherDuck-Open-Source/sql-tutorial">
+<a target="_blank" href="https://colab.research.google.com/github/motherduckdb/sql-tutorial">
   <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
 </a>
 
@@ -30,9 +30,9 @@ We will also install a few dataframe libraries, but these are optional unless yo
 ```
 
 ```{code-cell}
-!wget https://raw.githubusercontent.com/MotherDuck-Open-Source/sql-tutorial/main/data/ducks.csv -q --show-progress
-!wget https://raw.githubusercontent.com/MotherDuck-Open-Source/sql-tutorial/main/data/birds.csv -q --show-progress
-!wget https://raw.githubusercontent.com/MotherDuck-Open-Source/sql-tutorial/main/answers/answers_3.zip -q 
+!wget https://raw.githubusercontent.com/motherduckdb/sql-tutorial/main/data/ducks.csv -q --show-progress
+!wget https://raw.githubusercontent.com/motherduckdb/sql-tutorial/main/data/birds.csv -q --show-progress
+!wget https://raw.githubusercontent.com/motherduckdb/sql-tutorial/main/answers/answers_3.zip -q 
 !unzip -o answers_3.zip -d answers 
 ```
 

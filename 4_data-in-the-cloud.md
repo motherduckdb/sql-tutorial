@@ -12,7 +12,7 @@ kernelspec:
   name: python3
 ---
 
-<a target="_blank" href="https://colab.research.google.com/github/MotherDuck-Open-Source/sql-tutorial">
+<a target="_blank" href="https://colab.research.google.com/github/motherduckdb/sql-tutorial">
   <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
 </a>
 
@@ -38,7 +38,7 @@ except:
 This cell downloads the answers for the exercises.
 
 ```{code-cell}
-!wget https://raw.githubusercontent.com/MotherDuck-Open-Source/sql-tutorial/main/answers/answers_4.zip -q 
+!wget https://raw.githubusercontent.com/motherduckdb/sql-tutorial/main/answers/answers_4.zip -q 
 !unzip -o answers_4.zip -d answers 
 ```
 
@@ -59,7 +59,7 @@ To do so, you can [copy your token](https://app.motherduck.com/token-request?app
 
 If you are using Google Colab, you can click on the "Secrets" tab and add a new "token" secret there. See how to do that in the screenshot below.
 
-<img src="https://github.com/MotherDuck-Open-Source/sql-tutorial/blob/main/notebooks/Colab_Secret.png?raw=true" width=400>
+<img src="https://github.com/motherduckdb/sql-tutorial/blob/main/notebooks/Colab_Secret.png?raw=true" width=400>
 
 Now, you can get your token from the secrets manager and load it into an environment variable. After this, you can connect to MotherDuck without any extra authentication steps!
 

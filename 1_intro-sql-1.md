@@ -12,7 +12,7 @@ kernelspec:
   name: python3
 ---
 
-<a target="_blank" href="https://colab.research.google.com/github/MotherDuck-Open-Source/sql-tutorial">
+<a target="_blank" href="https://colab.research.google.com/github/motherduckdb/sql-tutorial">
   <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
 </a>
 
@@ -42,8 +42,8 @@ Let's get started with inspecting some data! We'll use the {Download}`washington
 To download the dataset directly from GitHub, run:
 
 ```{code-cell}
-!wget https://raw.githubusercontent.com/MotherDuck-Open-Source/sql-tutorial/main/data/washington_weather.csv -q
-!wget https://raw.githubusercontent.com/MotherDuck-Open-Source/sql-tutorial/main/answers/answers_1.zip -q 
+!wget https://raw.githubusercontent.com/motherduckdb/sql-tutorial/main/data/washington_weather.csv -q
+!wget https://raw.githubusercontent.com/motherduckdb/sql-tutorial/main/answers/answers_1.zip -q 
 !unzip -o answers_1.zip -d answers 
 ```
 
