@@ -9,7 +9,7 @@ def convert_myst_markdown(input_file, output_file):
     download_pattern = r'(\{Download\}`(.+?\.csv)<\./data/(.+?\.csv)>`)'
     def replace_download_and_add_wget(match):
         full_match, filename, _ = match.groups()
-        replacement = f"[{filename}](https://raw.githubusercontent.com/MotherDuck-Open-Source/sql-tutorial/main/data/{filename})"
+        replacement = f"[{filename}](https://raw.githubusercontent.com/motherduckdb/sql-tutorial/main/data/{filename})"
         return replacement
 
     content = re.sub(download_pattern, replace_download_and_add_wget, content)

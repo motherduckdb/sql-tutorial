@@ -12,7 +12,7 @@ kernelspec:
   name: python3
 ---
 
-<a target="_blank" href="https://colab.research.google.com/github/MotherDuck-Open-Source/sql-tutorial">
+<a target="_blank" href="https://colab.research.google.com/github/motherduckdb/sql-tutorial">
   <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
 </a>
 
@@ -62,4 +62,4 @@ Throughout this tutorial, we'll explore how SQL can complement your Python skill
 
 By the end of this tutorial, you'll have a solid understanding of SQL basics, how to integrate SQL with your Python workflows, and when to choose SQL over DataFrame tools (and vice versa).
 
-To get started, review the [Setup instructions](https://motherduck-open-source.github.io/sql-tutorial/setup-instructions.html). Happy querying!
+To get started, review the [Setup instructions](https://motherduckdb.github.io/sql-tutorial/setup-instructions.html). Happy querying!
