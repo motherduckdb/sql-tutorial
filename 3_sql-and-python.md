@@ -54,7 +54,7 @@ duckdb.sql("SELECT 42 as hello_world").fetchall()
 ## B. Writing Pandas DataFrames with DuckDB
 DuckDB can also return a DataFrame directly using .df(), instead of a list of tuples!
 
-This is much faster for large datasets, and fits nicely into existing dataframe workflows like charting (which we will see later) or machine learning.
+This is much faster for large datasets, and fits nicely into existing dataframe workflows like charting or machine learning.
 
 ```{code-cell}
 duckdb.sql("SELECT 42 as hello_world").df()
@@ -77,7 +77,9 @@ duckdb.sql("SELECT * FROM ducks_pandas").df()
 ```
 
 ### When to use pd.read_csv?
-How would you decide whether to use Pandas or DuckDB to read a CSV file? There are pros to each!
+How would you decide whether to use Pandas or DuckDB to read a CSV file? 
+DuckDB has recently invested heavily in its CSV reader and is now able to handle even messier files than Pandas!
+So our recommendation would be to use DuckDB's CSV reader first (for robustness to odd CSVs, speed, and memory efficiency) and fall back to Pandas.
 
 ## D. Reading and Writing Polars and Apache Arrow
 
@@ -176,7 +178,7 @@ Now that we have a table set up, let's see how we can query this data using Ibis
 
 The question we will build up towards answering is, "Who were the most prolific people at finding many new species of non-extinct ducks, and when did they get started finding ducks?"
 
-Use a the `filter` function instead of a `where` clause to choose the rows you are interested in.
+Use the `filter` function instead of a `where` clause to choose the rows you are interested in. Ibis also uses Python's `==` comparators instead of SQL's single `=`. 
 
 ```{code-cell}
 persistent_ducks.filter(persistent_ducks.extinct == 0)
@@ -248,40 +250,6 @@ And there you go! You've learned:
 * How to use Ibis to run dataframe queries on top of DuckDB
 * How to see the SQL that Ibis is running on your behalf
 * How to mix and match SQL and Ibis
-
-
-```{admonition} Exercise 3.03
-
-The SQL that Ibis generated to find the people who discovered the most duck species is not the most concise. Can you re-write the Ibis SQL (listed below) to its simplest possible form, using DuckDB's Python client?
-
-Hint: as a first step, connect to the same database that Ibis connected to.
-```sql
-SELECT
-  *
-FROM (
-  SELECT
-    "t1"."author",
-    COUNT("t1"."name") AS "Count(name)",
-    MIN("t1"."year") AS "Min(year)"
-  FROM (
-    SELECT
-      "t0"."name",
-      "t0"."author",
-      "t0"."year"
-    FROM "whats_quackalackin"."main"."persistent_ducks" AS "t0"
-    WHERE
-      "t0"."extinct" = CAST(0 AS TINYINT)
-  ) AS "t1"
-  GROUP BY
-    1
-) AS "t2"
-ORDER BY
-  "t2"."Count(name)" DESC
-```
-```{code-cell}
-# Uncomment and run to show solution
-# !cat ./answers/answer_3.03.py
-```
 
 
 ```{admonition} Exercise 3.04
