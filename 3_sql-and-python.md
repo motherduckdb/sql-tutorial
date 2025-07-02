@@ -264,6 +264,7 @@ SELECT
 FROM 'birds.csv'
 GROUP BY Species_Common_Name
 ```
+```
 
 ```{admonition} Exercise 3.04
 
@@ -273,6 +274,7 @@ Hint 2: Ibis uses `mean` instead of `avg`!
 
 Hint 3: Ibis aggregate documentation: https://ibis-project.org/reference/expression-tables#ibis.expr.types.relations.Table.aggregate
 ```
+
 ```{code-cell}
 # Uncomment and run to show solution
 # !cat ./answers/answer_3.04.py
