@@ -22,6 +22,8 @@ You're likely familiar with NumPy or DataFrame tools like Pandas, Polars or PyAr
 
 [Structured Query Language](https://duckdb.org/docs/sql/introduction.html) (or SQL for short) is the standard language for interacting with relational databases. It's been around for decades and remains crucial in the data science toolkit.
 
+Now, if you're ready to learn SQL, you're immediately faced with a choice: which database? Traditional OSS RDMBS like PostgreSQL or MySQL are powerful but requires server setup and configuration. SQLite is simple but struggles with analytical workloads. Cloud databases like BigQuery are great but cost money and require internet access. For learning SQL effectively, you need something that's both simple to get started with and powerful enough for real data science work.
+
 [DuckDB](https://duckdb.org/) is an in-process SQL OLAP database management system, designed to be fast and efficient for analytical queries. It is a database that lives in-process which makes it fast, portable and easy to use and deploy. It's especially great for learning SQL because all you need to do is to download it, and it runs right on your laptop! It combines the simplicity of SQLite with the analytical power of traditional data warehouses.
 
 But why should you care about SQL or `duckdb`?
