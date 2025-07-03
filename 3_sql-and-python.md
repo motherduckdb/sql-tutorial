@@ -19,7 +19,7 @@ kernelspec:
 
 ## Configuring your execution environment
 
-We have convenietly included a devcontainer that will run inside a GitHub codespace on GitHub. This is the approach we will be showing for the next part of this demo. To open the dev container, go to [the repo](https://github.com/motherduckdb/sql-tutorial), click the green button that says `<> Code`, select "Codespaces", and create a new one! For the best experience, click the "+" and select 4-cores (or more).
+We have conveniently included a devcontainer that will run inside a GitHub codespace on GitHub. This is the approach we will be showing for the next part of this demo. To open the dev container, go to [the repo](https://github.com/motherduckdb/sql-tutorial), click the green button that says `<> Code`, select "Codespaces", and create a new one! For the best experience, click the "+" and select 4-cores (or more).
 
 Once you are in the code space, we want to use a [marimo](https://marimo.io/) notebook. Marimo is similar to Jupyter notebooks, but built in a way that behaves a little bit better for our demo. To get started with marimo, run the following commands in the terminal of your codespace:
 1. `uv init`
@@ -100,7 +100,7 @@ So our recommendation would be to use DuckDB's CSV reader first (for robustness 
 
 ### Checking back in on Marimo
 
-If you haven't yet saved your notebook, perhaps now is a good time to do so. Give it a name on the top of your file, and then click the save icon (it should be highlighted yellow). When we drop back to the github codespace, we can see that the `.py` file has been created for us, and if you inspect the file you will notice - its just a python script! This means we can (1) source control it easily and (2) run it as a python script whenever want. 
+If you haven't yet saved your notebook, perhaps now is a good time to do so. Give it a name on the top of your file, and then click the save icon (it should be highlighted yellow). When we drop back to the github codespace, we can see that the `.py` file has been created for us, and if you inspect the file you will notice - its just a python script! This means we can (1) source control it easily and (2) run it as a python script whenever we want. 
 
 You will also noticed that it uses `mo.sql` for sql cells - this a function in the marimo library that lets us get that nice sql interaction baked into python.
 
