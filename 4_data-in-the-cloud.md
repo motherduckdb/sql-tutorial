@@ -18,23 +18,6 @@ kernelspec:
 
 # 4. Collaborating with data in the Cloud
 
-To start off, install the latest version of `duckdb` and `magic-duckdb` to run this notebook.
-
-```{code-cell}
-!pip install --upgrade duckdb magic-duckdb -q
-%load_ext magic_duckdb
-```
-
-We're also going to create a helper variable `IN_COLAB` to see if we're running Google Colab. This will come in handy later.
-
-```{code-cell}
-try:
-  import google.colab
-  IN_COLAB = True
-except:
-  IN_COLAB = False
-```
-
 This cell downloads the answers for the exercises.
 
 ```{code-cell}
@@ -57,26 +40,15 @@ However, this will throw an error! You actually need to specify your authenticat
 
 To do so, you can [copy your token](https://app.motherduck.com/token-request?appName=Jupyter) from Motherduck and add it to your notebook "Secrets".
 
-If you are using Google Colab, you can click on the "Secrets" tab and add a new "token" secret there. See how to do that in the screenshot below.
-
-<img src="https://github.com/motherduckdb/sql-tutorial/blob/main/notebooks/Colab_Secret.png?raw=true" width=400>
-
 Now, you can get your token from the secrets manager and load it into an environment variable. After this, you can connect to MotherDuck without any extra authentication steps!
 
-```{code-cell}
-import os
+BUT if you want to use a Marimo SQL Cell, this will *simply work*:
 
-if IN_COLAB:
-  from google.colab import userdata
-  os.environ["motherduck_token"] = userdata.get('token')
+```
+ATTACH 'md:'
 ```
 
-If you're running in a Jupyter Notebook elsewhere, you can uncomment and run the following, and paste your token in the input field:
-
-```{code-cell}
-# import getpass
-# os.environ["motherduck_token"] = getpass.getpass(prompt='Password: ', stream=None)
-```
+Then you can click-through the authentication steps and get your token into your Marimo session.
 
 ```{admonition} Exercise 4.01
 Create a connection to MotherDuck and show all tables in your `sample_data` database. You can use the `SHOW TABLES` command that is documented [here](https://duckdb.org/docs/guides/meta/list_tables.html).
@@ -95,7 +67,6 @@ To query the data, you'll want to fully specify the table name with the followin
 For example, you can run the below cell to get the service requests between March 27th and 31st of 2022:
 
 ```{code-cell}
-%%dql -co con
 SELECT
   created_date, agency_name, complaint_type,
   descriptor, incident_address, resolution_description
@@ -122,14 +93,12 @@ Now, let's try to load some data from a data source into MotherDuck. HuggingFace
 To query a HuggingFace dataset, you can run:
 
 ```{code-cell}
-%%dql -co con
 SELECT * FROM read_parquet('hf://datasets/datonic/threatened_animal_species/data/threatened_animal_species.parquet');
 ```
 
 Before we create a new table with this data, let's first swap to a different database. You can do so by creating a new DuckDB connection, or by changing the database with the `USE` statement. For example, to connect to your default database, `my_db`, run:
 
 ```{code-cell}
-%%dql -co con
 USE my_db;
 ```
 
@@ -156,12 +125,9 @@ Now, we have two tables that we can join together and share with our colleagues!
 Let's inspect them and take a look at the columns we have available.
 
 ```{code-cell}
-%%dql -co con
 DESCRIBE animals;
 ```
 
-```{code-cell}
-%%dql -co con
 DESCRIBE duckdb_ducks;
 ```
 
@@ -178,7 +144,6 @@ Create a new table called `duckdb_species` that joins the `duckdb_ducks` and `an
 To share your database, you can run:
 
 ```{code-cell}
-%%dql -co con -o df
 CREATE SHARE duck_share FROM my_db (ACCESS UNRESTRICTED);
 ```
 
@@ -200,20 +165,17 @@ ATTACH '<share_url>';
 For example, to load the [Mosaic example datasets](https://github.com/motherduckdb/wasm-client/tree/main), run
 
 ```{code-cell}
-%%dql -co con
 ATTACH 'md:_share/mosaic_examples/b01cfda8-239e-4148-a228-054b94cdc3b4';
 ```
 
 You can then inspect the database and query the data like so:
 
 ```{code-cell}
-%%dql -co con
 USE mosaic_examples;
 SHOW TABLES;
 ```
 
 ```{code-cell}
-%%dql -co con
 SELECT * FROM seattle_weather;
 ```
 
@@ -226,7 +188,6 @@ Attach the share you received from your neighbor and inspect the tables.
 To detach a database someone shared with you, make sure it's not selected, and run `DETACH`:
 
 ```{code-cell}
-%%dql -co con
 USE my_db;
 DETACH mosaic_examples;
 ```
@@ -234,6 +195,39 @@ DETACH mosaic_examples;
 To drop the share you created, simply run:
 
 ```{code-cell}
-%%dql -co con
 DROP SHARE duck_share;
 ```
+
+## How do we fit AI into this?
+
+MotherDuck contains [a set of useful AI functions](https://motherduck.com/docs/category/sql-assistant/) that you can use interrogate your data.
+
+A particularly useful one is `PRAGMA prompt_query('<natural language question>')` - which we can use interrogate our datasets? Recall the exercise from part 3 - getting the bird with the maximum wing length? Lets do this with a bit of AI in MotherDuck.
+
+The first step is that it must understand the data, so we can simply create a table using CTAS from our local file:
+
+```sql
+CREATE OR REPLACE TABLE birds AS 
+FROM 'birds.csv'
+```
+
+Then we can ask a question about it.
+
+```sql
+PRAGMA prompt_query('which bird has the largest wing length?')
+```
+
+This *should* return the right answer. But how can we validate it? Lets use `CALL prompt_sql()` to do so!
+
+```sql
+CALL prompt_sql('which bird has the largest wing length?')
+```
+
+This will return the SQL query that is associated to this question, which can then be inspected and run by the user!
+
+## Further Reading
+
+We have written extensively about using AI with SQL. Hopefully these links will help you understand how you can better these types of capabilities into your own workflow.
+- [Writing Flawless SQL in Cursor](https://motherduck.com/blog/vibe-coding-sql-cursor/)
+- [Using the MotherDuck MCP for Fast Pipeline Dev](https://motherduck.com/blog/faster-data-pipelines-with-mcp-duckdb-ai/)
+- [NLP inside of your database with `PROMPT()`](https://motherduck.com/blog/llm-data-pipelines-prompt-motherduck-dbt/)
