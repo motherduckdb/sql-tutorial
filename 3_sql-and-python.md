@@ -197,6 +197,8 @@ As an exercise, use SQL to initially pull the CSV file, but then chain together 
 
 Another option for using DuckDB is Ibis, a powerful Python library that allows you to interact with databases using a DataFrame-like syntax. We'll also show you how to combine the SQL and Ibis so you can get the best of both worlds.
 
+Ibis also works across many different databases, so you can write your code once and run it on a variety of database engines.
+
 First, let's make sure you have the necessary packages installed. You can install DuckDB and Ibis using pip:
 
 ```{code-cell}
