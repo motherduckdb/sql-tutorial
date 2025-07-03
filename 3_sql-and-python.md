@@ -17,16 +17,25 @@ kernelspec:
 
 # 3. Combining SQL and Python
 
+## Configuring your execution environment
+
+We have convenietly included a devcontainer that will run inside a GitHub codespace on GitHub. This is the approach we will be showing for the next part of this demo. To open the dev container, go to [the repo](https://github.com/motherduckdb/sql-tutorial), click the green button that says `<> Code`, select "Codespaces", and create a new one! For the best experience, click the "+" and select 4-cores (or more).
+
+Once you are in the code space, we want to use a [marimo](https://marimo.io/) notebook. Marimo is similar to Jupyter notebooks, but built in a way that behaves a little bit better for our demo. To get started with marimo, run the following commands in the terminal of your codespace:
+1. `uv init`
+2. `uv add marimo`
+3. `uv run marimo edit`
+
+This will spin up a marimo server in our codespace, and open it in a new tab. Make sure to grab your access token from the terminal and you can connect! Create a new notebook, and then lets get back to the tutorial.
+
 ## A. Using `duckdb` from Python
 
-DuckDB is released with a native Python client. You can install it with a simple pip install, and there are no dependencies required.
-
-Google Collab even has duckdb pre-installed!
+DuckDB is released with a native Python client. You can install it with a simple `pip install` (or `uv add`), and there are no dependencies required.
 
 We will also install a few dataframe libraries, but these are optional unless you would like to do some of your analysis outside of DuckDB!
 
 ```{code-cell}
-!pip install --upgrade duckdb pandas polars pyarrow -q
+!uv add duckdb pandas polars pyarrow
 ```
 
 ```{code-cell}
@@ -51,6 +60,14 @@ DuckDB also has a .sql method that has some convenience features beyond .execute
 duckdb.sql("SELECT 42 as hello_world").fetchall()
 ```
 
+Of course, Marimo has its own sql interaction, which is awesome as well. Click the "SQL" Icon in the notebook and you write SQL as if you are inside a SQL-based IDE.
+
+```{code-cell}
+SELECT 42 as hello_world
+```
+
+**Note**: When you run functions that have dependencies that are not yet imported, Marimo will detect it and suggest that you add it to your environment. You may notice that it wants to grab `sqlglot` for the SQL cells - it is safe to do so.
+
 ## B. Writing Pandas DataFrames with DuckDB
 DuckDB can also return a DataFrame directly using .df(), instead of a list of tuples!
 
@@ -60,7 +77,7 @@ This is much faster for large datasets, and fits nicely into existing dataframe 
 duckdb.sql("SELECT 42 as hello_world").df()
 ```
 
-If that output looks familiar, it's because we have been using Pandas DataFrames the entire time we have been using duckdb_magic! duckdb_magic returns a dataframe as the result of each SQL query.
+You will notice that if we inspect the SQL cell from Part A - Marimo automagically loads your sql query into a dataframe. Neat!
 
 ## C. Reading Pandas DataFrames
 Not only can DuckDB write dataframes, but it can read them as if they were a table!
@@ -80,6 +97,12 @@ duckdb.sql("SELECT * FROM ducks_pandas").df()
 How would you decide whether to use Pandas or DuckDB to read a CSV file? 
 DuckDB has recently invested heavily in its CSV reader and is now able to handle even messier files than Pandas!
 So our recommendation would be to use DuckDB's CSV reader first (for robustness to odd CSVs, speed, and memory efficiency) and fall back to Pandas.
+
+### Checking back in on Marimo
+
+If you haven't yet saved your notebook, perhaps now is a good time to do so. Give it a name on the top of your file, and then click the save icon (it should be highlighted yellow). When we drop back to the github codespace, we can see that the `.py` file has been created for us, and if you inspect the file you will notice - its just a python script! This means we can (1) source control it easily and (2) run it as a python script whenever want. 
+
+You will also noticed that it uses `mo.sql` for sql cells - this a function in the marimo library that lets us get that nice sql interaction baked into python.
 
 ## D. Reading and Writing Polars and Apache Arrow
 
