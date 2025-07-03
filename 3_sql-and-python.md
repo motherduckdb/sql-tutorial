@@ -116,7 +116,7 @@ Read in the birds.csv file using Apache Arrow, then use the DuckDB Python librar
 ```{admonition} Exercise 3.02
 
 Use the DuckDB Python client to return these results as a Polars dataframe.
-
+```
 ```sql
 SELECT
     Species_Common_Name,
@@ -125,18 +125,79 @@ SELECT
     AVG(Beak_Length_Culmen) AS Avg_Beak_Length_Culmen
 FROM 'birds.csv'
 GROUP BY Species_Common_Name
-
 ```
+
 ```{code-cell}
 # Uncomment and run to show solution
 # !cat ./answers/answer_3.02.py
 ```
 
-## 2. Using `ibis` with a DuckDB backend
+## 2. Using the DuckDB Relational API
+
+In addition to SQL, you can write DuckDB queries using the built-in relational API. 
+We'll see how to chain functions together to build up a query.
+DuckDB will then combine that function chain together into a single query, so you still get all of DuckDB's query optimization (speed and scalability!) benefits.
+
+The question we will build up towards answering is, "Who were the most prolific people at finding many new species of non-extinct ducks, and when did they get started finding ducks?"
+
+<!-- TODO: Add in a few incremental steps as examples -->
+
+The Relational API has a `read_csv` function that mirrors the Pandas function of the same name.
+These methods can be called on DuckDB connection objects or the default connection using the duckb object itself.
+
+As a note, if we wrap our relational expressions in a set of parentheses, we can organize them nicely across multiple lines. 
+
+Here, we `filter` using an expression much like we would use in a `where` clause to only non-extinct ducks. 
+The, we use `aggregate` to execute a `group by` operation, grouping by the `author` column. 
+Lastly, we `order` by one of the aggregate expression columns.
+
+```{code-cell}
+duck_legends = (duckdb
+  .read_csv("ducks.csv")
+  .filter("extinct = 0")
+  .aggregate("author, count(name) as count_name, min(year) as min_year", "author")
+  .order("count_name desc")
+)
+duck_legends
+```
+
+You can also see the SQL that is generated using with `sql_query()` function:
+```{code-cell}
+print(duck_legends.sql_query())
+```
+
+Much like DuckDB can query DataFrames within SQL as if they were tables, it can also do the same for relation objects.
+
+```{code-cell}
+duckdb.sql("select * from duck_legends limit 5")
+```
+
+Technically, the `.sql` function returns a relation object as well, so you can also chain relational operations after a SQL one also!
+
+As a silly example, we could run:
+
+```{code-cell}
+duckdb.sql("select * from duck_legends limit 5").limit(1)
+```
+
+Now we can mix and match SQL and the relational API!
+
+```{admonition} Exercise 3.04
+As an exercise, use SQL to initially pull the CSV file, but then chain together the remaining Relational operators from the `duck_legends` example above to return the same result.
+```
+
+```{code-cell}
+# Uncomment and run to show solution
+# !cat ./answers/answer_3.03.py
+```
+
+## 3. Using `ibis` with a DuckDB backend
 
 ### A. Introduction to Ibis and DuckDB
 
-We'll show you how to leverage the power of DuckDB without even needing to write a single line of SQL. Instead, we'll use Ibis, a powerful Python library that allows you to interact with databases using a DataFrame-like syntax. We'll also show you how to combine the two so you can get the best of both worlds.
+Another option for using DuckDB is Ibis, a powerful Python library that allows you to interact with databases using a DataFrame-like syntax. We'll also show you how to combine the SQL and Ibis so you can get the best of both worlds.
+
+Ibis also works across many different databases, so you can write your code once and run it on a variety of database engines.
 
 First, let's make sure you have the necessary packages installed. You can install DuckDB and Ibis using pip:
 
@@ -174,24 +235,13 @@ persistent_ducks = con.create_table('persistent_ducks', obj=ducks_ibis.to_pyarro
 persistent_ducks
 ```
 
-Now that we have a table set up, let's see how we can query this data using Ibis. With Ibis, you can perform operations on your data without writing SQL. Let's see how similar it feels...
+Now that we have a table set up, let's see how we can query this data using Ibis. Let's see how similar it feels...
 
-The question we will build up towards answering is, "Who were the most prolific people at finding many new species of non-extinct ducks, and when did they get started finding ducks?"
+We will answer the same question as with the relational API: "Who were the most prolific people at finding many new species of non-extinct ducks, and when did they get started finding ducks?"
 
 Use the `filter` function instead of a `where` clause to choose the rows you are interested in. Ibis also uses Python's `==` comparators instead of SQL's single `=`. 
 
-```{code-cell}
-persistent_ducks.filter(persistent_ducks.extinct == 0)
-```
-
 Pick your columns using the conveniently named `select` function!
-
-```{code-cell}
-(persistent_ducks
-  .filter(persistent_ducks.extinct == 0)
-  .select("name", "author", "year")
-)
-```
 
 The `group_by` functions matches well with the `group by` clause.
 
@@ -247,6 +297,7 @@ duck_legends
 
 And there you go! You've learned:
 * How to read and write Pandas, Polars, and Apache Arrow with DuckDB
+* How to use DuckDB's Relational API and how to combine it with SQL
 * How to use Ibis to run dataframe queries on top of DuckDB
 * How to see the SQL that Ibis is running on your behalf
 * How to mix and match SQL and Ibis
@@ -255,6 +306,7 @@ And there you go! You've learned:
 ```{admonition} Exercise 3.04
 
 Convert the SQL query below into an Ibis expression. You are welcome to ignore the column renaming - think of it as a "stretch-goal" if you have time! We did not cover how to do that yet.
+```
 ```sql
 SELECT
     Species_Common_Name,
@@ -263,7 +315,6 @@ SELECT
     AVG(Beak_Length_Culmen) AS Avg_Beak_Length_Culmen
 FROM 'birds.csv'
 GROUP BY Species_Common_Name
-```
 ```
 
 ```{admonition} Exercise 3.04
