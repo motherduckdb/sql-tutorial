@@ -202,7 +202,7 @@ DROP SHARE duck_share;
 
 MotherDuck contains [a set of useful AI functions](https://motherduck.com/docs/category/sql-assistant/) that you can use interrogate your data.
 
-A particularly useful one is `PRAGMA prompt_query('<natural language question>')` - which we can use interrogate our datasets? Recall the exercise from part 3 - getting the bird with the maximum wing length? Lets do this with a bit of AI in MotherDuck.
+A particularly useful one is `PRAGMA prompt_query('<natural language question>')` - which we can use interrogate our datasets. Recall the exercise from part 3 - getting the bird with the maximum wing length? Lets do this with a bit of AI in MotherDuck.
 
 The first step is that it must understand the data, so we can simply create a table using CTAS from our local file:
 
