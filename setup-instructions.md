@@ -22,13 +22,13 @@ For the initial, SQL-only sections of this tutorial, please install the DuckDB c
 
 1. Follow the DuckDB CLI installation instructions for your OS and CPU
 2. Create a these folders in your user directory:
-  1. MacOS and Linux: `~/.duckdb/extension_data/ui`
-  2. Windows: `%userprofile%\.duckdb\extension_data\ui`
+  * MacOS and Linux: `~/.duckdb/extension_data/ui`
+  * Windows: `%userprofile%\.duckdb\extension_data\ui`
 3. Copy the tutorial notebook data stored in the file [ui.db](https://github.com/motherduckdb/sql-tutorial/raw/refs/heads/main/ui.db) into that folder
-  1. Note: If you have already used the DuckDB Local UI, rename the existing ui.db and ui.db.wal before copying over the new ui.db from the link above.
+  * Note: If you have already used the DuckDB Local UI, rename the existing ui.db and ui.db.wal before copying over the new ui.db from the link above.
 4. Ensure that duckdb is added to your path, or navigate to the folder where you saved the DuckDB CLI
 5. Run `duckdb -ui` (or `./duckdb -ui` if it is not on your path), and we are off and flying!
-  1. Your browser should automatically open to `http://localhost:4213/` - go there to see the UI!
+  * Your browser should automatically open to `http://localhost:4213/` - go there to see the UI!
 
 ## Section 3
 
