@@ -12,9 +12,6 @@ ENV PYTHONUNBUFFERED 1
 # Install UV via pip
 RUN pip install uv==0.7.15 --no-cache-dir
 
-# install marimo
-RUN uv add marimo
-
 # Install DuckDB CLI based on architecture
 RUN ARCH=$(uname -m) && \
     if [ "$ARCH" = "aarch64" ]; then \
