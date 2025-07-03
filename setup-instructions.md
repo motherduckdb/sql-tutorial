@@ -14,98 +14,26 @@ kernelspec:
 
 # Setup instructions
 
-To get started with the tutorial, you'll need an interactive Python notebook environment.
+Welcome! It's officially SQL-o-clock!
 
-## Option 1: Run in Colab
+For the initial, SQL-only sections of this tutorial, please install the DuckDB command line interface (CLI) and load the tutorial notebooks following the steps below:
 
-To get started without any setup required, <a target="_blank" href="https://colab.research.google.com/github/motherduckdb/sql-tutorial">open the tutorial in Colab</a>.
+## Sections 1 and 2
 
-This requires a Google account. If you don't have one, you can <a href="https://accounts.google.com/signup" target="_blank">sign up</a>, or try the other options below.
+1. Follow the DuckDB CLI installation instructions for your OS and CPU
+2. Create a these folders in your user directory:
+  1. MacOS and Linux: `~/.duckdb/extension_data/ui`
+  2. Windows: `%userprofile%\.duckdb\extension_data\ui`
+3. Copy the tutorial notebook data stored in the file [ui.db](https://github.com/motherduckdb/sql-tutorial/raw/refs/heads/main/ui.db) into that folder
+  1. Note: If you have already used the DuckDB Local UI, rename the existing ui.db and ui.db.wal before copying over the new ui.db from the link above.
+4. Ensure that duckdb is added to your path, or navigate to the folder where you saved the DuckDB CLI
+5. Run `duckdb -ui` (or `./duckdb -ui` if it is not on your path), and we are off and flying!
+  1. Your browser should automatically open to `http://localhost:4213/` - go there to see the UI!
 
-## Option 2: Run in Jupyter Notebook on your laptop
+## Section 3
 
-1. Browse to a folder in your home directory where you want to keep your tutorial files and clone the GitHub repo:
-```bash
-git clone git@github.com:motherduckdb/sql-tutorial.git
-```
-2. Create a new Python virtual environment and activate it:
-```bash
-python3 -m venv venv
-source venv/bin/activate
-```
-3. Start a local <a href="https://jupyter.org/install" target="_blank">Jupyter Notebook</a> in the `notebooks` folder:
-```
-cd notebooks
-jupyter notebook .
-```
+For the sections that cover combining SQL and Python, see the installation instructions in section 3.
 
-Now you can open the `.ipynb` files accompanying the tutorial and run them cell by cell, add your own cells or make edits where needed.
+## Section 4
 
-## Option 3: Run in MotherDuck
-
-For the parts that require only SQL, you can run them in the MotherDuck app. To access the app, <a href="https://app.motherduck.com/?auth_flow=signup" target="_blank">sign up for MotherDuck</a>.
-
-Every new account receives a 30-day free trial of the MotherDuck Standard Plan, with no credit card required. After the end of your Standard Plan free trial, your account will automatically move to the MotherDuck Free Plan, no action needed on your part.
-
-# How to run SQL queries
-
-Throughout this tutorial, we'll show you SQL queries that you can run to inspect and manipulate data with DuckDB. DuckDB offers two database modes: in-memory and file-based. In-memory databases store data in RAM, providing lightning-fast operations but losing data when closed, ideal for temporary processing. File-based databases store data on disk, offering persistence and larger data capacity, suitable for long-term storage and sharing. You can easily switch between modes, allowing flexibility to balance performance and data retention needs.
-
-## Jupyter Notebook: in-memory database
-
-For the first two sections of this tutorial, we will use an in-memory database, since all examples are self-contained and can easily be re-run if needed.
-
-You can run SQL directly in a Jupyter Notebook with a Python kernel by installing and loading the `magic_duckdb` extension:
-
-```python
-!pip install --upgrade duckdb magic-duckdb --quiet
-%load_ext magic_duckdb
-```
-
-and using the `%%dql` magic command:
-
-```python
-%%dql
-SELECT 42;
-```
-
-## Jupyter Notebook: persistent database
-
-For the latter part of this tutorial, we will cover data sharing and collaboration. To persist your tables to a file or remote database, you can explicitly create a new connection in Python:
-
-```python
-import duckdb
-con = duckdb.connect("my_database.duckdb")
-```
-
-In a separate cell, pass the connection object to the magic command with the `-co` option:
-
-```python
-%%dql -co con
-CREATE TABLE test_table as (SELECT 42);
-SELECT * FROM test_table;
-```
-
-## MotherDuck
-
-You can also run SQL directly in a MotherDuck notebook. After <a href="https://app.motherduck.com/?auth_flow=signup" target="_blank">signing up</a>, go to <a href="https://app.motherduck.com/" target="_blank">app.motherduck.com</a> and log in. You'll see a SQL notebook environment where you can create cells, upload CSV files and run SQL queries.
-
-Once you have the account and [get the authentication token](https://motherduck.com/docs/key-tasks/authenticating-to-motherduck/#creating-an-access-token), you can interact with your data in MotherDuck through the same Python API:
-
-```python
-import duckdb
-con = duckdb.connect(f"md:my_db?motherduck_token={token}")
-```
-
-## How to access files
-
-In a local Jupyter notebook, you can use the local filesystem with no extra steps.
-
-In Google Colab, you can download the files using `!wget <url>` and access them directly. Another option is to mount a folder in Google Drive, which makes all files in that folder available to query under `/content/gdrive/MyDrive` path:
-
-```
-from google.colab import drive
-drive.mount('/content/gdrive')
-```
-
-In MotherDuck, you can add JSON, CSV or Parquet file directly using the Add Files button in the top left of the UI.
+In preparation for section 4, please [sign up for a free account with MotherDuck](https://app.motherduck.com/?auth_flow=signup)!
