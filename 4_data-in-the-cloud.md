@@ -20,7 +20,7 @@ kernelspec:
 
 This cell downloads the answers for the exercises.
 
-```
+```bash
 # run this in your Vs Code terminal
 wget https://raw.githubusercontent.com/motherduckdb/sql-tutorial/main/answers/answers_4.zip -q 
 unzip -o answers_4.zip -d answers 

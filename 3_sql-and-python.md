@@ -34,7 +34,7 @@ DuckDB is released with a native Python client. You can install it with a simple
 
 We will also install a few dataframe libraries, but these are optional unless you would like to do some of your analysis outside of DuckDB!
 
-```
+```bash
 # run this in terminal in vs code [or in the marimo UI in "packages" section on the left]
 uv add duckdb pandas polars pyarrow
 ```
