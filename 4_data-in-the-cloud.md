@@ -21,8 +21,9 @@ kernelspec:
 This cell downloads the answers for the exercises.
 
 ```{code-cell}
-!wget https://raw.githubusercontent.com/motherduckdb/sql-tutorial/main/answers/answers_4.zip -q 
-!unzip -o answers_4.zip -d answers 
+# run this in your Vs Code terminal
+wget https://raw.githubusercontent.com/motherduckdb/sql-tutorial/main/answers/answers_4.zip -q 
+unzip -o answers_4.zip -d answers 
 ```
 
 ## Sign up for MotherDuck
@@ -66,11 +67,10 @@ To query the data, you'll want to fully specify the table name with the followin
 
 For example, you can run the below cell to get the service requests between March 27th and 31st of 2022:
 
-```{code-cell}
+```sql
 SELECT
   created_date, agency_name, complaint_type,
   descriptor, incident_address, resolution_description
-
 FROM
   sample_data.nyc.service_requests
 WHERE
@@ -81,6 +81,7 @@ WHERE
 ```{admonition} Exercise 4.02
 Run `DESCRIBE` on the `sample_data.who.ambient_air_quality` table to inspect the column names. Write a query that gets the average concentrations of PM1.0 and PM2.5 particles for the `'United States of America'`, for the last 10 years, grouped and ordered by year.
 ```
+
 ```{code-cell}
 # Uncomment and run to show solution
 # !cat ./answers/answer_4.02.py
@@ -124,10 +125,11 @@ Now, we have two tables that we can join together and share with our colleagues!
 
 Let's inspect them and take a look at the columns we have available.
 
-```{code-cell}
+```sql
 DESCRIBE animals;
 ```
 
+```sql
 DESCRIBE duckdb_ducks;
 ```
 
@@ -143,7 +145,7 @@ Create a new table called `duckdb_species` that joins the `duckdb_ducks` and `an
 
 To share your database, you can run:
 
-```{code-cell}
+```sql
 CREATE SHARE duck_share FROM my_db (ACCESS UNRESTRICTED);
 ```
 
@@ -164,18 +166,18 @@ ATTACH '<share_url>';
 
 For example, to load the [Mosaic example datasets](https://github.com/motherduckdb/wasm-client/tree/main), run
 
-```{code-cell}
+```sql
 ATTACH 'md:_share/mosaic_examples/b01cfda8-239e-4148-a228-054b94cdc3b4';
 ```
 
 You can then inspect the database and query the data like so:
 
-```{code-cell}
+```sql
 USE mosaic_examples;
 SHOW TABLES;
 ```
 
-```{code-cell}
+```sql
 SELECT * FROM seattle_weather;
 ```
 
@@ -187,14 +189,14 @@ Attach the share you received from your neighbor and inspect the tables.
 
 To detach a database someone shared with you, make sure it's not selected, and run `DETACH`:
 
-```{code-cell}
+```sql
 USE my_db;
 DETACH mosaic_examples;
 ```
 
 To drop the share you created, simply run:
 
-```{code-cell}
+```sql
 DROP SHARE duck_share;
 ```
 

@@ -58,9 +58,9 @@ Throughout this tutorial, we'll explore how SQL can complement your Python skill
 
 - Load data and perform basic operations such as filtering, sorting, grouping and adding a calculated column.
 - Combine data and filter rows based on data from multiple tables
-- Use SQL and Python to get the best of both worlds
-- Use SQL for fast and efficient data visualization
+- Use SQL and Python to get the best of both worlds with [Marimo](https://marimo.io)
 - Share your data with your collaborators and efficiently access large amounts of data
+- Explore some ways to use AI and SQL together
 
 By the end of this tutorial, you'll have a solid understanding of SQL basics, how to integrate SQL with your Python workflows, and when to choose SQL over DataFrame tools (and vice versa).
 

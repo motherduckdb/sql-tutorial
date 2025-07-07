@@ -35,14 +35,16 @@ DuckDB is released with a native Python client. You can install it with a simple
 We will also install a few dataframe libraries, but these are optional unless you would like to do some of your analysis outside of DuckDB!
 
 ```{code-cell}
-!uv add duckdb pandas polars pyarrow
+# run this in terminal in vs code [or in the marimo UI in "packages" section on the left]
+uv add duckdb pandas polars pyarrow
 ```
 
 ```{code-cell}
-!wget https://raw.githubusercontent.com/motherduckdb/sql-tutorial/main/data/ducks.csv -q --show-progress
-!wget https://raw.githubusercontent.com/motherduckdb/sql-tutorial/main/data/birds.csv -q --show-progress
-!wget https://raw.githubusercontent.com/motherduckdb/sql-tutorial/main/answers/answers_3.zip -q 
-!unzip -o answers_3.zip -d answers 
+# run this in terminal in vs code 
+wget https://raw.githubusercontent.com/motherduckdb/sql-tutorial/main/data/ducks.csv -q --show-progress
+wget https://raw.githubusercontent.com/motherduckdb/sql-tutorial/main/data/birds.csv -q --show-progress
+wget https://raw.githubusercontent.com/motherduckdb/sql-tutorial/main/answers/answers_3.zip -q 
+unzip -o answers_3.zip -d answers 
 ```
 
 DuckDB follows the Python DB API spec, so you can use it the same way you would use another database.
@@ -62,7 +64,7 @@ duckdb.sql("SELECT 42 as hello_world").fetchall()
 
 Of course, Marimo has its own sql interaction, which is awesome as well. Click the "SQL" Icon in the notebook and you write SQL as if you are inside a SQL-based IDE.
 
-```{code-cell}
+```sql
 SELECT 42 as hello_world
 ```
 
