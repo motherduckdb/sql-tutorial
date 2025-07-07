@@ -39,7 +39,7 @@ We will also install a few dataframe libraries, but these are optional unless yo
 uv add duckdb pandas polars pyarrow
 ```
 
-```{code-cell}
+```bash
 # run this in terminal in vs code 
 wget https://raw.githubusercontent.com/motherduckdb/sql-tutorial/main/data/ducks.csv -q --show-progress
 wget https://raw.githubusercontent.com/motherduckdb/sql-tutorial/main/data/birds.csv -q --show-progress
